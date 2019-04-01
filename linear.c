@@ -5,24 +5,23 @@
 #include <linux/sched/task.h>
 #include <linux/sched/signal.h>
 
-int tasks_lister(void)
+int linear_init(void)
 {
   struct task_struct *task;  
-  printk(KERN_INFO "List tasks linearly.\n"); 
   for_each_process(task)
   {
-    printk(KERN_INFO "pid: %d | pname: %s | state: %ld\n", task->pid, task->comm, task->state);
+    printk(KERN_INFO "pid: %d\tpname: %s\tstate: %ld\n", task->pid, task->comm, task->state);
   }
   return 0;
 }
 
-void tasks_lister(void)
+void linear_exit(void)
 {
   printk(KERN_INFO "Module removed.\n");
 }
 
-module_init(tasks_lister);
-module_exit(tasks_lister);
+module_init(linear_init);
+module_exit(linear_exit);
 
 MODULE_LICENSE("GPL");
 MODULE_DESCRIPTION("Iterating over Tasks Linearly");
