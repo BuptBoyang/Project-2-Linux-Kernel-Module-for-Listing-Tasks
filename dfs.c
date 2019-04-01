@@ -12,27 +12,26 @@ void dfs(struct task_struct *task)
   list_for_each(list, &task->children) {
     task_next = list_entry(list, struct task_struct, sibling);
 
-    printk(KERN_INFO "pid: %d | pname: %s | state: %ld\n", task_next->pid, task_next->comm, task_next->state);
+    printk(KERN_INFO "pid: %d\tpname: %s\tstate: %ld\n", task_next->pid, task_next->comm, task_next->state);
 
     dfs(task_next);
   }  
 }
 
-int dfs_init(void)
+int tasks_lister_dfs_init(void)
 {
-  printk(KERN_INFO "Loading module...\n");
   dfs(&init_task);
   return 0;
 }
 
-void dfs_exit(void)
+void tasks_lister_dfs_exit(void)
 {
   printk(KERN_INFO "Module removed.\n");
 }
 
-module_init(dfs_init);
-module_exit(dfs_exit);
+module_init(tasks_lister_dfs_init);
+module_exit(tasks_lister_dfs_exit);
 
 MODULE_LICENSE("GPL");
-MODULE_DESCRIPTION("Iterating over Tasks with a Depth-First Search Tree");
-MODULE_AUTHOR("zby");
+MODULE_DESCRIPTION("Simple Module");
+MODULE_AUTHOR("SGG");
